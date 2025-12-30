@@ -1,0 +1,86 @@
+import java.util.Scanner;
+
+public class Lecturer {
+    private String name;
+    private String workId;
+    
+    public Lecturer(String name, String workId) {
+        this.name = name;
+        this.workId = workId;
+    }
+    
+    public void showMenu(Scanner scanner) {
+        boolean loggedIn = true;
+        
+        while (loggedIn) {
+            System.out.println("===================================================\n" +
+                               "                  LECTURER MENU\n" + 
+                               "===================================================");
+            System.out.println("\n[LECTURER INFORMATION]\n");
+            System.out.println("Lecturer Name\t: " + name);
+            System.out.println("Work ID\t: " + workId);
+            System.out.println("User Type\t: Lecturer");
+            System.out.println("\n---------------------------------------------------");
+            System.out.println("1. View Assigned Courses");
+            System.out.println("2. View Students in a Course");
+            System.out.println("3. Update Student Marks");
+            System.out.println("4. View Course Results Summary");
+            System.out.println("5. Logout");
+            System.out.println("---------------------------------------------------");
+            System.out.print("Enter your choice (1-5): ");
+            
+            String choice = scanner.nextLine();
+            
+            switch (choice) {
+                case "1":
+                    System.out.println("\n=== View Assigned Courses ===");
+                    System.out.println("Functionality coming soon!");
+                    System.out.println("Would display all courses assigned to this lecturer.");
+                    break;
+                case "2":
+                    System.out.println("\n=== View Students in a Course ===");
+                    System.out.println("Functionality coming soon!");
+                    System.out.println("Would display all students registered for a selected course.");
+                    break;
+                case "3":
+                    System.out.println("\n=== Update Student Marks ===");
+                    System.out.println("Functionality coming soon!");
+                    System.out.println("Would allow lecturer to enter/update marks for students.");
+                    break;
+                case "4":
+                    System.out.println("\n=== View Course Results Summary ===");
+                    System.out.println("Functionality coming soon!");
+                    System.out.println("Would display summary statistics for a course.");
+                    break;
+                case "5":
+                    clearScreen();
+                    loggedIn = false;
+                    break;
+                default:
+                    System.out.println("\nInvalid choice! Please enter a number from 1 to 5.");
+            }
+            
+            if (!choice.equals("5")) {
+                System.out.println("\nPress Enter to continue...");
+                scanner.nextLine();
+                clearScreen();
+            }
+        }
+    }
+    
+    private void clearScreen() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            // If clearing fails, just print multiple newlines
+            for (int i = 0; i < 50; i++) {
+                System.out.println();
+            }
+        }
+    }
+}
