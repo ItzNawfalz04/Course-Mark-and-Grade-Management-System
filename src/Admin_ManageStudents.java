@@ -5,7 +5,7 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
-public class Admin_ManageStudent {
+public class Admin_ManageStudents {
 
     private static final String STUDENT_FILE = "csv_database/Students.csv";
 
@@ -13,7 +13,7 @@ public class Admin_ManageStudent {
         boolean running = true;
 
         while (running) {
-            clearScreen();
+            Main.clearScreen();
             System.out.println("===================================================");
             System.out.println("                   MANAGE STUDENTS"); 
             System.out.println("===================================================\n");
@@ -44,7 +44,7 @@ public class Admin_ManageStudent {
                     break;
                 case "5":
                     running = false;
-                    clearScreen();
+                    Main.clearScreen();
                     break;
 
                 default:
@@ -56,7 +56,7 @@ public class Admin_ManageStudent {
 
     // Add Students
     private static void addNewStudent(Scanner scanner) {
-        clearScreen();
+        Main.clearScreen();
         System.out.println("===================================================");
         System.out.println("                    ADD NEW STUDENTS"); 
         System.out.println("===================================================\n");
@@ -108,7 +108,7 @@ public class Admin_ManageStudent {
 
     // Edit Students
     private static void editStudent(Scanner scanner) {
-        clearScreen();
+        Main.clearScreen();
         System.out.println("=========================================================================================");
         System.out.println("                                  EDIT STUDENTS");
         System.out.println("=========================================================================================\n");
@@ -188,7 +188,7 @@ public class Admin_ManageStudent {
         System.out.println("Press 'Enter' to keep existing value.");
         System.out.println("Type 'Exit' to cancel.\n");
 
-        System.out.print("Edit Student Name (" + oldName + ")\t: ");
+        System.out.print("Edit Student Name (" + oldName + ")\t\t: ");
         String name = scanner.nextLine().trim();
         if (isCancel(name)) return;
         if (name.isEmpty()) name = oldName;
@@ -242,7 +242,7 @@ public class Admin_ManageStudent {
 
     // Delete Students
     private static void deleteStudent(Scanner scanner) {
-        clearScreen();
+        Main.clearScreen();
         System.out.println("=========================================================================================");
         System.out.println("                                DELETE STUDENTS");
         System.out.println("=========================================================================================\n");
@@ -354,7 +354,7 @@ public class Admin_ManageStudent {
 
     // View All Students
     private static void viewAllStudents(Scanner scanner) {
-        clearScreen();
+        Main.clearScreen();
         System.out.println("=========================================================================================");
         System.out.println("                              VIEW ALL STUDENTS");
         System.out.println("=========================================================================================\n");
@@ -404,19 +404,6 @@ public class Admin_ManageStudent {
     private static void pause(Scanner scanner) {
         System.out.print("\nPress Enter to continue...");
         scanner.nextLine();
-    }
-
-    private static void clearScreen() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            for (int i = 0; i < 50; i++) System.out.println();
-        }
     }
 
     // Username Check

@@ -32,7 +32,7 @@ public class Admin {
             switch (choice) {
                 case "1":
                     clearScreen();
-                    Admin_ManageStudent.showMenu(scanner);
+                    Admin_ManageStudents.showMenu(scanner);
                     break;
                 case "2":
                     System.out.println("\n=== Manage Lecturers ===");
