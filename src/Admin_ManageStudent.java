@@ -15,7 +15,7 @@ public class Admin_ManageStudent {
         while (running) {
             clearScreen();
             System.out.println("===================================================");
-            System.out.println("                    MANAGE STUDENTS"); 
+            System.out.println("                   MANAGE STUDENTS"); 
             System.out.println("===================================================\n");
             System.out.println(">> Admin >> Manage Students\n");
             System.out.println("---------------------------------------------------");
@@ -37,8 +37,7 @@ public class Admin_ManageStudent {
                     editStudent(scanner);
                     break;
                 case "3":
-                    System.out.println("\nThis function is not implemented yet.");
-                    pause(scanner);
+                    deleteStudent(scanner);
                     break;
                 case "4":
                     viewAllStudents(scanner);
@@ -241,6 +240,118 @@ public class Admin_ManageStudent {
         pause(scanner);
     }
 
+    // Delete Students
+    private static void deleteStudent(Scanner scanner) {
+        clearScreen();
+        System.out.println("=========================================================================================");
+        System.out.println("                                DELETE STUDENTS");
+        System.out.println("=========================================================================================\n");
+        System.out.println(">> Admin >> Manage Students >> Delete Students\n");
+
+        String[] lines = new String[1000];
+        int count = 0;
+
+        // Read all students
+        try (BufferedReader br = new BufferedReader(new FileReader(STUDENT_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                line = line.replace("\uFEFF", "").trim();
+                if (!line.isEmpty()) {
+                    lines[count++] = line;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading Students.csv");
+            pause(scanner);
+            return;
+        }
+
+        if (count == 0) {
+            System.out.println("No student records found.");
+            pause(scanner);
+            return;
+        }
+
+        // Display table
+        System.out.println("------------------------------------------------------------------------------------------");
+        System.out.printf("%-5s %-25s %-15s %-20s %-15s%n",
+                "No.", "Name", "Matric No.", "Username", "Password");
+        System.out.println("------------------------------------------------------------------------------------------");
+
+        for (int i = 0; i < count; i++) {
+            String[] data = lines[i].split(",");
+            System.out.printf("%-5d %-25s %-15s %-20s %-15s%n",
+                    (i + 1),
+                    data[0].trim(),
+                    data[1].trim(),
+                    data[2].trim(),
+                    data[3].trim());
+        }
+
+        System.out.println("\n------------------------------------------------------------------------------------------");
+        System.out.print("Pick student to be deleted (1-" + count + ") or type 'Exit': ");
+        String input = scanner.nextLine().trim();
+
+        if (isCancel(input)) return;
+
+        int choice;
+        try {
+            choice = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input.");
+            pause(scanner);
+            return;
+        }
+
+        if (choice < 1 || choice > count) {
+            System.out.println("Invalid student number.");
+            pause(scanner);
+            return;
+        }
+
+        int index = choice - 1;
+        String[] student = lines[index].split(",");
+
+        String name = student[0].trim();
+        String matric = student[1].trim();
+        String username = student[2].trim();
+        String password = student[3].trim();
+
+        // Confirmation
+        System.out.println("\nAre you sure you want to delete this student? (Y/N)");
+        System.out.print(">> ");
+        String confirm = scanner.nextLine().trim();
+
+        if (!confirm.equalsIgnoreCase("Y")) {
+            System.out.println("\nDelete operation cancelled.");
+            pause(scanner);
+            return;
+        }
+
+        // Rewrite CSV excluding deleted student
+        try (PrintWriter pw = new PrintWriter(new FileWriter(STUDENT_FILE))) {
+            for (int i = 0; i < count; i++) {
+                if (i != index) {
+                    pw.println(lines[i]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error updating Students.csv");
+            pause(scanner);
+            return;
+        }
+
+        // Show deleted info
+        System.out.println("\nStudent Deleted Successfully!");
+        System.out.println("[INFORMATION OF DELETED STUDENT]");
+        System.out.println("Name\t\t: " + name);
+        System.out.println("Matric No.\t: " + matric);
+        System.out.println("Username\t: " + username);
+        System.out.println("Password\t: " + password);
+
+        pause(scanner);
+    }
+
     // View All Students
     private static void viewAllStudents(Scanner scanner) {
         clearScreen();
@@ -285,7 +396,7 @@ public class Admin_ManageStudent {
         }
 
         System.out.println("\n------------------------------------------------------------------------------------------");
-        System.out.println("Press Enter to go Back...");
+        System.out.println("Press anything to go back...");
         scanner.nextLine();
     }
 
