@@ -27,7 +27,8 @@ public class Lecturer {
             System.out.println("2. View Students in a Course");
             System.out.println("3. Update Student Marks");
             System.out.println("4. View Course Results Summary");
-            System.out.println("5. Logout");
+            System.out.println("5. Load Assignment Course from file");
+            System.out.println("6. Logout");
             System.out.println("---------------------------------------------------");
             System.out.print("Enter your choice (1-5): ");
             
@@ -55,6 +56,10 @@ public class Lecturer {
                     System.out.println("Would display summary statistics for a course.");
                     break;
                 case "5":
+                    System.out.println("\n=== Loading Course Assignment from file ===");
+                    readCourseAssg();
+                    System.out.println("");
+                case "6":
                     Main.clearScreen();
                     loggedIn = false;
                     break;
@@ -62,7 +67,7 @@ public class Lecturer {
                     System.out.println("\nInvalid choice! Please enter a number from 1 to 5.");
             }
             
-            if (!choice.equals("5")) {
+            if (!choice.equals("6")) {
                 System.out.println("\nPress Enter to continue...");
                 scanner.nextLine();
                 Main.clearScreen();
@@ -82,8 +87,8 @@ public class Lecturer {
                 
                 String[] values = line.split(",");
                 if (values.length >= 3) {
-                    Course crs = Main.crsList.stream().filter(c -> c.getCode().equals(values[0])).findFirst().get();
-                    if (workID.equals(values[1])){csrAssgList.add(new CourseAssg(crs, "2025/2026", 1))}
+                    Course crs = Main.crsList.stream().filter(c -> c.getCode().equals(values[0].trim())).findFirst().get();
+                    if (workID.equals(values[1].trim())){csrAssgList.add(new CourseAssg(crs, "2025/2026", 1))}
                 }
             }
         }
