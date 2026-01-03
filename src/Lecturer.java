@@ -1,8 +1,10 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Lecturer {
     private String name;
     private String workId;
+    ArrayList<CourseAssg> crsAssgList = new ArrayList<>();
     
     public Lecturer(String name, String workId) {
         this.name = name;
@@ -67,4 +69,22 @@ public class Lecturer {
             }
         }
     }
+
+    /*public void readCourseAssg() {
+        try (BufferedReader br = new BufferedReader(new FileReader("csv_database/CourseAssg.csv"))){
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Handle UTF-8 BOM (Byte Order Mark) if present
+                line = line.replace("\uFEFF", "").trim();
+                
+                // Check if line is not empty
+                if (line.isEmpty()) continue;
+                
+                String[] values = line.split(",");
+                if (values.length >= 1) {
+                    if (workID.equals(values[1])){csrAssgList.add(new Course(), "2025/2026", 1)}
+                }
+            }
+        }
+    }*/     
 }
