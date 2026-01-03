@@ -9,6 +9,7 @@ public class Main {
     static String currentUserFullName = "";
     static String currentUserId = "";
     static String currentUserRole = "";
+    static ArrayList<Course> crsList = new ArrayList<>();
     
     public static void main(String[] args) {
         clearScreen();
@@ -158,6 +159,24 @@ public class Main {
             // If clearing fails, just print multiple newlines
             for (int i = 0; i < 50; i++) {
                 System.out.println();
+            }
+        }
+    }
+
+    private static void loadCourse() {
+        try (BufferedReader br = new BufferedReader(new FileReader("csv_database/Courses.csv"))){
+            String line;
+            while ((line = br.readLine()) != null) {
+                // Handle UTF-8 BOM (Byte Order Mark) if present
+                line = line.replace("\uFEFF", "").trim();
+                
+                // Check if line is not empty
+                if (line.isEmpty()) continue;
+                
+                String[] values = line.split(",");
+                if (values.length >= 3) {
+                    crsList.add(new Course(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim())));
+                }
             }
         }
     }
