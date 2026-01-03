@@ -81,8 +81,9 @@ public class Lecturer {
                 if (line.isEmpty()) continue;
                 
                 String[] values = line.split(",");
-                if (values.length >= 1) {
-                    if (workID.equals(values[1])){csrAssgList.add(new Course(), "2025/2026", 1)}
+                if (values.length >= 3) {
+                    Course crs = Main.crsList.stream().filter(c -> c.getCode().equals(values[0])).findFirst().get();
+                    if (workID.equals(values[1])){csrAssgList.add(new CourseAssg(crs, "2025/2026", 1))}
                 }
             }
         }
