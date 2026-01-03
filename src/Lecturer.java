@@ -79,7 +79,7 @@ public class Lecturer {
         }
     }
 
-    public void loadCourseAssg() {
+    /*public void loadCourseAssg() {
         try (BufferedReader br = new BufferedReader(new FileReader("csv_database/CourseAssg.csv"))){
             String line;
             while ((line = br.readLine()) != null) {
@@ -101,5 +101,5 @@ public class Lecturer {
                 System.out.println("Error reading file: ");
                 System.out.println("Error message: " + e.getMessage());
         }
-    }     
+    }*/     
 }
