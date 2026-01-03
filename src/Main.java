@@ -125,7 +125,7 @@ public class Main {
                 
                 String[] values = line.split(",");
                 if (values.length >= 4) {
-                    String name = values[1].trim(); //Before : String name = values[0].trim();, aku ganti sebab, kalau values[0] tu kat excel kan bahagian "No","1", etc.
+                    String name = values[0].trim();
                     String id = values[1].trim();
                     String fileUsername = values[2].trim();
                     String filePassword = values[3].trim();
