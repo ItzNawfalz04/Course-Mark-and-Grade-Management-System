@@ -4,14 +4,15 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Student {
+public class Student extends User {
     private String name;
     private String matricNo;
     private ArrayList<CourseReg> crsReg = new ArrayList<>();
     
-    public Student(String name, String matricNo) {
+    public Student(String name, String matricNo, String username, String password) {
         this.name = name;
         this.matricNo = matricNo;
+        super(username, password);
     }
 
     public String getmatricNo() {
