@@ -9,9 +9,10 @@ public class Lecturer {
     private String workId;
     ArrayList<CourseAssg> crsAssgList = new ArrayList<>();
     
-    public Lecturer(String name, String workId) {
+    public Lecturer(String name, String workId, String username, String password) {
         this.name = name;
         this.workId = workId;
+        super(username, password);
     }
     
     public void showMenu(Scanner scanner) {
