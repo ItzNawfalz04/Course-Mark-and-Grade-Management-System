@@ -9,12 +9,20 @@ public class Main {
     static String currentUserFullName = "";
     static String currentUserId = "";
     static String currentUserRole = "";
+
+    // I think better store all the data inside main too, not only the data that we will use
     static ArrayList<Course> crsList = new ArrayList<>();
+    static StudentList<Student> stdList = new ArrayList<>();
+    static LecturerList<Lecturer> lectList = new ArrayList<>();
     
     public static void main(String[] args) {
         clearScreen();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
+
+        loadStudents();
+        loadLecturers();
+        loadCourses();
         
         while (running) {
             System.out.println("===================================================\n" +
@@ -63,11 +71,31 @@ public class Main {
         String username = scanner.nextLine();
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
-        
+
+        User loggedInUser = login(username, password);
+
+        if (loggedInUser == null) {
+            System.out.println("\n----------------------------------------------------------------");
+            System.out.println("Error: Invalid username or password. Please try again.");
+            System.out.println("----------------------------------------------------------------");
+            System.out.println("\nPress Enter to continue...");
+            scanner.nextLine();
+            clearScreen();
+        }
+        else {
+            if(loggedInUser instanceof Student) {
+                Student s = (Student) loggedInUser;
+                s.showMenu(scanner);
+            }
+            else if(loggedInUser instanceof Lecturer) {
+                Lecturer l = (Lecturer) loggedInUser;
+                l.showMenu(scanner);
+            }
+        }
         // Student Authentication
-        boolean isStudent = authenticateUser("csv_database/Students.csv", username, password, "student");
+        //boolean isStudent = authenticateUser("csv_database/Students.csv", username, password, "student");
         
-        if (isStudent) {
+        /*if (isStudent) {
             System.out.println("\n----------------------------------------------------------------");
             System.out.println("Login successful! Welcome Student: " + currentUserFullName + "!");
             System.out.println("----------------------------------------------------------------");
@@ -114,7 +142,7 @@ public class Main {
         }
     }
     
-    private static boolean authenticateUser(String filename, String username, String password, String role) {
+    /*private static boolean authenticateUser(String filename, String username, String password, String role) {
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -145,7 +173,7 @@ public class Main {
             System.out.println("Error message: " + e.getMessage());
         }
         return false;
-    }
+    }*/
     
     public static void clearScreen() {
         try {
@@ -163,21 +191,47 @@ public class Main {
         }
     }
 
-    private static void loadCourse() {
-        try (BufferedReader br = new BufferedReader(new FileReader("csv_database/Courses.csv"))){
+    public static ArrayList<String> readCSVFile(String filename){
+        ArrayList<String> dataString = new ArrayList<>();
+        try(BufferedReader br = new BufferedReader(new FileReader("csv_database/"+filename+".csv"))){
             String line;
-            while ((line = br.readLine()) != null) {
-                // Handle UTF-8 BOM (Byte Order Mark) if present
-                line = line.replace("\uFEFF", "").trim();
-                
-                // Check if line is not empty
+            while ((line = br.readLine()) != null){
+                String cleanLine = line.replace("\uFEFF", "").trim();
                 if (line.isEmpty()) continue;
-                
-                String[] values = line.split(",");
-                if (values.length >= 3) {
-                    crsList.add(new Course(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim())));
-                }
+                dataString.add(cleanLine);
             }
         }
+        catch(IOException e) {
+            System.out.println("Gagal membaca file: " + filename);
+            System.out.println("Error message: " + e.getMessage());
+        }
+        return dataString;
+    }
+
+    public static void loadStudents() {
+        ArrayList<String> data = readCSVFile("Students");
+        for(int i = 0; i < data.size(); i++){
+            String line = data.get(i);
+            String[] values = line.split(",");
+
+            if (values.length >= 4){
+                stdList.add(new Student(values[0].trim(), values[1].trim(), values[2].trim(), values[3].trim()));
+                System.out.println("Loaded " + stdList.size() + " students.");
+            }
+        }
+    }
+
+    public static User login(String username, String password){
+        for(Student s : stdList) {
+            if(s.getUsername().equals(username) && s.getPassword().equals(password)){
+                return s;
+            }
+        }
+        for(Lecturer l : lectList) {
+            if(l.getUsername().equals(username) && l.getPasswords().equals(password)){
+                return l;
+            }
+        }
+        return null;
     }
 }
