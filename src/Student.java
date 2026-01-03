@@ -77,7 +77,7 @@ public class Student {
         }
     }
     
-    public void loadCourseReg() {
+    /*public void loadCourseReg() {
         for(int i = 0; i<Main.crsList.size(); i++){
             try (BufferedReader br = new BufferedReader(new FileReader("csv_database/"+Main.crsList.get(i).getCode()+".csv"))){
                 //Assign the course in index i from the courseList, for crsreg student later
@@ -108,5 +108,5 @@ public class Student {
                 System.out.println("Error message: " + e.getMessage());
             }
         }
-    }
+    }*/
 }
