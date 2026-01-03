@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Main {
     // User data storage
@@ -11,18 +13,19 @@ public class Main {
     static String currentUserRole = "";
 
     // I think better store all the data inside main too, not only the data that we will use
-    static ArrayList<Course> crsList = new ArrayList<>();
-    static StudentList<Student> stdList = new ArrayList<>();
-    static LecturerList<Lecturer> lectList = new ArrayList<>();
+    static HashMap<String, Course> crsMap = new HashMap<>();
+    static HashMap<String, Student> stdMap = new HashMap<>();
+    static HashMap<String, Lecturer> lectMap = new HashMap<>();
     
     public static void main(String[] args) {
         clearScreen();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
-        loadStudents();
-        loadLecturers();
-        loadCourses();
+        loadData();
+        assignCourseandLectAssg();
+        courseRegistrationandStudentRegistration();
+        
         
         while (running) {
             System.out.println("===================================================\n" +
@@ -85,10 +88,22 @@ public class Main {
         else {
             if(loggedInUser instanceof Student) {
                 Student s = (Student) loggedInUser;
+                System.out.println("\n----------------------------------------------------------------");
+                System.out.println("Login successful! Welcome Student: " + s.getName() + "!");
+                System.out.println("----------------------------------------------------------------");
+                System.out.println("\nPress Enter to continue...");
+                scanner.nextLine();
+                clearScreen();
                 s.showMenu(scanner);
             }
             else if(loggedInUser instanceof Lecturer) {
                 Lecturer l = (Lecturer) loggedInUser;
+                System.out.println("\n----------------------------------------------------------------");
+                System.out.println("Login successful! Welcome Lecturer: " + l.getName() + "!");
+                System.out.println("----------------------------------------------------------------");
+                System.out.println("\nPress Enter to continue...");
+                scanner.nextLine();
+                clearScreen();
                 l.showMenu(scanner);
             }
         }
@@ -96,14 +111,23 @@ public class Main {
         //boolean isStudent = authenticateUser("csv_database/Students.csv", username, password, "student");
         
         /*if (isStudent) {
-            System.out.println("\n----------------------------------------------------------------");
-            System.out.println("Login successful! Welcome Student: " + currentUserFullName + "!");
-            System.out.println("----------------------------------------------------------------");
-            System.out.println("\nPress Enter to continue...");
-            scanner.nextLine();
-            clearScreen();
-            Student student = new Student(currentUserFullName, currentUserId);
-            student.showMenu(scanner);
+            if (isAdmin) {
+                    System.out.println("\n----------------------------------------------------------------");
+                    System.out.println("Login successful! Welcome Admin: " + currentUserFullName + "!");
+                    System.out.println("----------------------------------------------------------------");
+                    System.out.println("\nPress Enter to continue...");
+                    scanner.nextLine();
+                    clearScreen();
+                    Admin admin = new Admin(currentUserFullName, currentUserId);
+                    admin.showMenu(scanner);
+                } else {
+                    System.out.println("\n----------------------------------------------------------------");
+                    System.out.println("Error: Invalid username or password. Please try again.");
+                    System.out.println("----------------------------------------------------------------");
+                    System.out.println("\nPress Enter to continue...");
+                    scanner.nextLine();
+                    clearScreen();
+                }
         } else {
             // Lecturer Authentication
             boolean isLecturer = authenticateUser("csv_database/Lecturers.csv", username, password, "lecturer");
@@ -174,23 +198,104 @@ public class Main {
         }
         return false;
     }*/
+
+    //Login Authentication
+    public static User login(String username, String password){
+        for(Student s : stdMap.values()) {
+            if(s.getUsername().equals(username) && s.getPassword().equals(password)){
+                return s;
+            }
+        }
+        for(Lecturer l : lectMap.values()) {
+            if(l.getUsername().equals(username) && l.getPassword().equals(password)){
+                return l;
+            }
+        }
+        return null;
+    }
     
-    public static void clearScreen() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
+    public static void loadData() {
+        //Load Student Data and store it with mapping matric no : student
+        ArrayList<String> data = readCSVFile("Students");
+        for(int i = 0; i < data.size(); i++){
+            String line = data.get(i);
+            String[] values = line.split(",");
+
+            if (values.length >= 4){
+                stdMap.put(values[1].trim(), new Student(values[0].trim(), values[1].trim(), values[2].trim(), values[3].trim()));
             }
-        } catch (Exception e) {
-            // If clearing fails, just print multiple newlines
-            for (int i = 0; i < 50; i++) {
-                System.out.println();
+        }
+        System.out.println("Loaded " + stdMap.size() + " students.");
+        
+        //Load Lecturer Data and store it with mapping workid : lecturer
+        data = readCSVFile("Lecturers");
+        for(int i = 0; i < data.size(); i++){
+            String line = data.get(i);
+            String[] values = line.split(",");
+
+            if (values.length >= 4){
+                lectMap.put(values[1].trim(), new Lecturer(values[0].trim(), values[1].trim(), values[2].trim(), values[3].trim()));
             }
+        }
+        System.out.println("Loaded " + lectMap.size() + " lecturers.");
+        
+        //Load Course Data and store it with mapping course code : course
+        data = readCSVFile("Courses");
+        for(int i = 0; i < data.size(); i++){
+            String line = data.get(i);
+            String[] values = line.split(",");
+
+            if (values.length >= 3){
+                crsMap.put(values[1].trim(), new Course(values[0].trim(), values[1].trim(), Integer.parseInt(values[2].trim())));
+            }
+        }
+        System.out.println("Loaded " + crsMap.size() + " courses.");
+    }
+
+    public static void assignCourseandLectAssg() {
+        ArrayList<String> data = readCSVFile("CourseAssg");
+        for(int i = 0; i < data.size(); i++){
+            String line = data.get(i);
+            String[] values = line.split(",");
+
+            if(values.length >= 3){
+                Lecturer lect = lectMap.get(values[1].trim());
+                Course crs = crsMap.get(values[2].trim());
+
+                if(lect != null && crs != null){
+                    lect.addCrsAssg(new CourseAssg(crs, "2025/2026", 1));
+                    crs.addLectAssg(new LecturerAssg(lect, "2025/2026", 1));
+                }
+                else{
+                    System.out.println("No matching workid or coursecode in mapping");
+                }     
+            } 
         }
     }
 
+    public static void courseRegistrationandStudentRegistration() {
+        for(Course crs : crsMap.values()){
+            String filename = crs.getCode();
+            ArrayList<String> data = readCSVFile(filename);
+            for(int i = 0; i < data.size(); i++){
+                String line = data.get(i);
+                String[] values = line.split(",");
+                
+                if(values.length >= 3){
+                    Student std = stdMap.get(values[0].trim());
+
+                    if(std != null){
+                        std.addCrsReg(new CourseReg(crs, "2025/2026", 1, new Mark(Integer.parseInt(values[1].trim()), Integer.parseInt(values[2].trim()))));
+                        crs.addStdReg(new StudentReg(std, "2025/2026", 1));
+                    }
+                    else{
+                        System.out.println("No matching student with matric no: "+values[0].trim()+"in student mapping");
+                    }
+                }
+            }
+        }
+    }
+    
     public static ArrayList<String> readCSVFile(String filename){
         ArrayList<String> dataString = new ArrayList<>();
         try(BufferedReader br = new BufferedReader(new FileReader("csv_database/"+filename+".csv"))){
@@ -208,30 +313,19 @@ public class Main {
         return dataString;
     }
 
-    public static void loadStudents() {
-        ArrayList<String> data = readCSVFile("Students");
-        for(int i = 0; i < data.size(); i++){
-            String line = data.get(i);
-            String[] values = line.split(",");
-
-            if (values.length >= 4){
-                stdList.add(new Student(values[0].trim(), values[1].trim(), values[2].trim(), values[3].trim()));
-                System.out.println("Loaded " + stdList.size() + " students.");
+    public static void clearScreen() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (Exception e) {
+            // If clearing fails, just print multiple newlines
+            for (int i = 0; i < 50; i++) {
+                System.out.println();
             }
         }
-    }
-
-    public static User login(String username, String password){
-        for(Student s : stdList) {
-            if(s.getUsername().equals(username) && s.getPassword().equals(password)){
-                return s;
-            }
-        }
-        for(Lecturer l : lectList) {
-            if(l.getUsername().equals(username) && l.getPasswords().equals(password)){
-                return l;
-            }
-        }
-        return null;
     }
 }
