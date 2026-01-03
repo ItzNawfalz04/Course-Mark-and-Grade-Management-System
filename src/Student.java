@@ -1,12 +1,18 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Student {
     private String name;
     private String matricNo;
+    private ArrayList<CourseReg> crsReg = new ArrayList<>();
     
     public Student(String name, String matricNo) {
         this.name = name;
         this.matricNo = matricNo;
+    }
+
+    public String getmatricNo() {
+        return matricNo;
     }
     
     public void showMenu(Scanner scanner) {
@@ -64,6 +70,30 @@ public class Student {
                 System.out.println("\nPress Enter to continue...");
                 scanner.nextLine();
                 Main.clearScreen();
+            }
+        }
+    }
+    
+    public void loadCourseReg() {
+        for(int i = 0; i<Main.crsList.size(); i++){
+            try (BufferedReader br = new BufferedReader(new FileReader("csv_database/"+crsList.get(i).getCode()+".csv"))){
+                Course crs = Main.crsList.get(i);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    // Handle UTF-8 BOM (Byte Order Mark) if present
+                    line = line.replace("\uFEFF", "").trim();
+                
+                    // Check if line is not empty
+                    if (line.isEmpty()) continue;
+                
+                    String[] values = line.split(",");
+                    if (values.length >= 3) {
+                        //Course crs = Main.crsList.stream().filter(c -> c.getCode().equals(values[0].trim())).findFirst().get();
+                        if (matricNo.equals(values[0].trim())){
+                            csrRegList.add(new CourseReg(crs, "2025/2026", 1, new Mark(Integer.parseInt(values[1].trim()), Integer.parseInt(values[2].trim()))));
+                        }
+                    }
+                }
             }
         }
     }
