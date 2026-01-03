@@ -90,10 +90,14 @@ public class Student {
                     if (values.length >= 3) {
                         //Course crs = Main.crsList.stream().filter(c -> c.getCode().equals(values[0].trim())).findFirst().get();
                         if (matricNo.equals(values[0].trim())){
-                            csrRegList.add(new CourseReg(crs, "2025/2026", 1, new Mark(Integer.parseInt(values[1].trim()), Integer.parseInt(values[2].trim()))));
+                            csrReg.add(new CourseReg(crs, "2025/2026", 1, new Mark(Integer.parseInt(values[1].trim()), Integer.parseInt(values[2].trim()))));
                         }
                     }
                 }
+            }
+            catch(IOException e) {
+                System.out.println("Error reading file: ");
+                System.out.println("Error message: " + e.getMessage());
             }
         }
     }
