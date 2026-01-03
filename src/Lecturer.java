@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Lecturer {
     private String name;
@@ -57,8 +60,9 @@ public class Lecturer {
                     break;
                 case "5":
                     System.out.println("\n=== Loading Course Assignment from file ===");
-                    readCourseAssg();
+                    loadCourseAssg();
                     System.out.println("");
+                    break;
                 case "6":
                     Main.clearScreen();
                     loggedIn = false;
@@ -75,7 +79,7 @@ public class Lecturer {
         }
     }
 
-    /*public void readCourseAssg() {
+    public void loadCourseAssg() {
         try (BufferedReader br = new BufferedReader(new FileReader("csv_database/CourseAssg.csv"))){
             String line;
             while ((line = br.readLine()) != null) {
@@ -86,11 +90,16 @@ public class Lecturer {
                 if (line.isEmpty()) continue;
                 
                 String[] values = line.split(",");
-                if (values.length >= 3) {
-                    Course crs = Main.crsList.stream().filter(c -> c.getCode().equals(values[0].trim())).findFirst().get();
-                    if (workID.equals(values[1].trim())){csrAssgList.add(new CourseAssg(crs, "2025/2026", 1))}
+                if (values.length >= 2) {
+                    Course crs = Main.crsList.stream().filter(c -> c.getCode().equals(values[0].trim())).findFirst().orElse(null);
+                    if (workId.equals(values[1].trim())){csrAssgList.add(new CourseAssg(crs, "2025/2026", 1));}
                 }
             }
+            System.out.println("Data Loaded Successfully!");
         }
-    }*/     
+        catch (IOException e) {
+                System.out.println("Error reading file: ");
+                System.out.println("Error message: " + e.getMessage());
+        }
+    }     
 }
