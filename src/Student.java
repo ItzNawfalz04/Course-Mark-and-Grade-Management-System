@@ -1,5 +1,8 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Student {
     private String name;
@@ -76,7 +79,8 @@ public class Student {
     
     public void loadCourseReg() {
         for(int i = 0; i<Main.crsList.size(); i++){
-            try (BufferedReader br = new BufferedReader(new FileReader("csv_database/"+crsList.get(i).getCode()+".csv"))){
+            try (BufferedReader br = new BufferedReader(new FileReader("csv_database/"+Main.crsList.get(i).getCode()+".csv"))){
+                //Assign the course in index i from the courseList, for crsreg student later
                 Course crs = Main.crsList.get(i);
                 String line;
                 while ((line = br.readLine()) != null) {
@@ -88,9 +92,13 @@ public class Student {
                 
                     String[] values = line.split(",");
                     if (values.length >= 3) {
-                        //Course crs = Main.crsList.stream().filter(c -> c.getCode().equals(values[0].trim())).findFirst().get();
+                        //Find the equal matricNo for this student with the matricNo in the file
                         if (matricNo.equals(values[0].trim())){
-                            csrReg.add(new CourseReg(crs, "2025/2026", 1, new Mark(Integer.parseInt(values[1].trim()), Integer.parseInt(values[2].trim()))));
+                            //Add the course reg for this student with the course from [Course crs = Main.crsList.get(i)] adn the object mark from value 1 and 2 = coursework and finalexam
+                            crsReg.add(new CourseReg(crs, "2025/2026", 1, new Mark(Integer.parseInt(values[1].trim()), Integer.parseInt(values[2].trim()))));
+                        }
+                        else {
+                            System.out.println("Matric no not found in this course file" + crs.getCode());
                         }
                     }
                 }
