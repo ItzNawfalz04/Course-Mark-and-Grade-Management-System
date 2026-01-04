@@ -5,9 +5,9 @@ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
-public class Admin_ManageStudents {
+public class Admin_ManageLecturers {
 
-    private static final String STUDENT_FILE = "csv_database/Students.csv";
+    private static final String LECTURER_FILE = "csv_database/Lecturers.csv";
 
     public static void showMenu(Scanner scanner) {
         boolean running = true;
@@ -15,14 +15,14 @@ public class Admin_ManageStudents {
         while (running) {
             Main.clearScreen();
             System.out.println("===================================================");
-            System.out.println("                   MANAGE STUDENTS"); 
+            System.out.println("                 MANAGE LECTURERS"); 
             System.out.println("===================================================\n");
-            System.out.println(">> Admin >> Manage Students\n");
+            System.out.println(">> Admin >> Manage Lecturers\n");
             System.out.println("---------------------------------------------------");
-            System.out.println("[1] Add New Students");
-            System.out.println("[2] Edit Students");
-            System.out.println("[3] Delete Students");
-            System.out.println("[4] View All Students");
+            System.out.println("[1] Add New Lecturer");
+            System.out.println("[2] Edit Lecturer");
+            System.out.println("[3] Delete Lecturer");
+            System.out.println("[4] View All Lecturers");
             System.out.println("[5] Back to Admin Menu");
             System.out.println("---------------------------------------------------");
             System.out.print("Enter your choice (1-5): ");
@@ -31,16 +31,16 @@ public class Admin_ManageStudents {
 
             switch (choice) {
                 case "1":
-                    addNewStudent(scanner);
+                    addNewLecturer(scanner);
                     break;
                 case "2":
-                    editStudent(scanner);
+                    editLecturer(scanner);
                     break;
                 case "3":
-                    deleteStudent(scanner);
+                    deleteLecturer(scanner);
                     break;
                 case "4":
-                    viewAllStudents(scanner);
+                    viewAllLecturers(scanner);
                     break;
                 case "5":
                     running = false;
@@ -54,36 +54,36 @@ public class Admin_ManageStudents {
         }
     }
 
-    // Add Students
-    private static void addNewStudent(Scanner scanner) {
+    // Add Lecturer
+    private static void addNewLecturer(Scanner scanner) {
         Main.clearScreen();
         System.out.println("===================================================");
-        System.out.println("                    ADD NEW STUDENTS"); 
+        System.out.println("                  ADD NEW LECTURER"); 
         System.out.println("===================================================\n");
-        System.out.println(">> Admin >> Manage Students >> Add New Students");
+        System.out.println(">> Admin >> Manage Lecturers >> Add New Lecturer");
         System.out.println("\nType 'Exit' to cancel and return to previous menu.");
         System.out.println("\n---------------------------------------------------");
 
-        System.out.print("New Student Name\t: ");
+        System.out.print("Lecturer Name\t\t: ");
         String name = scanner.nextLine().trim();
         if (isCancel(name)) return;
 
-        System.out.print("New Student Matric No.\t: ");
-        String matricNo = scanner.nextLine().trim();
-        if (isCancel(matricNo)) return;
+        System.out.print("Lecturer Work ID\t: ");
+        String workId = scanner.nextLine().trim();
+        if (isCancel(workId)) return;
 
-        System.out.print("New Student Username\t: ");
+        System.out.print("Lecturer Username\t: ");
         String username = scanner.nextLine().trim();
         if (isCancel(username)) return;
 
-        System.out.print("New Student Password\t: ");
+        System.out.print("Lecturer Password\t: ");
         String password = scanner.nextLine().trim();
         if (isCancel(password)) return;
 
         System.out.println("\n---------------------------------------------------");
 
         // Validation
-        if (name.isEmpty() || matricNo.isEmpty() || username.isEmpty() || password.isEmpty()) {
+        if (name.isEmpty() || workId.isEmpty() || username.isEmpty() || password.isEmpty()) {
             System.out.println("\nError: All fields are required!");
             pause(scanner);
             return;
@@ -95,30 +95,30 @@ public class Admin_ManageStudents {
             return;
         }
 
-        try (PrintWriter pw = new PrintWriter(new FileWriter(STUDENT_FILE, true))) {
-            pw.println(name + "," + matricNo + "," + username + "," + password);
-            System.out.println("Student added successfully!");
+        try (PrintWriter pw = new PrintWriter(new FileWriter(LECTURER_FILE, true))) {
+            pw.println(name + "," + workId + "," + username + "," + password);
+            System.out.println("Lecturer added successfully!");
         } catch (IOException e) {
-            System.out.println("Error writing to Students.csv");
+            System.out.println("Error writing to Lecturers.csv");
             System.out.println("Message: " + e.getMessage());
         }
 
         pause(scanner);
     }
 
-    // Edit Students
-    private static void editStudent(Scanner scanner) {
+    // Edit Lecturer
+    private static void editLecturer(Scanner scanner) {
         Main.clearScreen();
         System.out.println("=========================================================================================");
-        System.out.println("                                  EDIT STUDENTS");
+        System.out.println("                                EDIT LECTURER");
         System.out.println("=========================================================================================\n");
-        System.out.println(">> Admin >> Manage Students >> Edit Students\n");
+        System.out.println(">> Admin >> Manage Lecturers >> Edit Lecturer\n");
 
         String[] lines = new String[1000]; // simple storage
         int count = 0;
 
-        // Read all students
-        try (BufferedReader br = new BufferedReader(new FileReader(STUDENT_FILE))) {
+        // Read all lecturers
+        try (BufferedReader br = new BufferedReader(new FileReader(LECTURER_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.replace("\uFEFF", "").trim();
@@ -127,21 +127,21 @@ public class Admin_ManageStudents {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading Students.csv");
+            System.out.println("Error reading Lecturers.csv");
             pause(scanner);
             return;
         }
 
         if (count == 0) {
-            System.out.println("No student records found.");
+            System.out.println("No lecturer records found.");
             pause(scanner);
             return;
         }
 
-        // Display students table
+        // Display lecturers table
         System.out.println("------------------------------------------------------------------------------------------");
         System.out.printf("%-5s %-25s %-15s %-20s %-15s%n",
-                "No.", "Name", "Matric No.", "Username", "Password");
+                "No.", "Name", "Work ID", "Username", "Password");
         System.out.println("------------------------------------------------------------------------------------------");
 
         for (int i = 0; i < count; i++) {
@@ -155,7 +155,7 @@ public class Admin_ManageStudents {
         }
 
         System.out.println("------------------------------------------------------------------------------------------");
-        System.out.print("Pick student to edit (1-" + count + ") or type 'Exit': ");
+        System.out.print("Pick lecturer to edit (1-" + count + ") or type 'Exit': ");
         String input = scanner.nextLine().trim();
 
         if (isCancel(input)) return;
@@ -170,37 +170,37 @@ public class Admin_ManageStudents {
         }
 
         if (choice < 1 || choice > count) {
-            System.out.println("Invalid student number.");
+            System.out.println("Invalid lecturer number.");
             pause(scanner);
             return;
         }
 
         int index = choice - 1;
-        String[] student = lines[index].split(",");
+        String[] lecturer = lines[index].split(",");
 
-        String oldName = student[0].trim();
-        String oldMatric = student[1].trim();
-        String oldUsername = student[2].trim();
-        String oldPassword = student[3].trim();
+        String oldName = lecturer[0].trim();
+        String oldWorkId = lecturer[1].trim();
+        String oldUsername = lecturer[2].trim();
+        String oldPassword = lecturer[3].trim();
 
         System.out.println("------------------------------------------------------------------------------------------\n");
-        System.out.println("[EDITING STUDENT]\n");
+        System.out.println("[EDITING LECTURER]\n");
         System.out.println("Press 'Enter' to keep existing value.");
         System.out.println("Type 'Exit' to cancel.\n");
 
-        System.out.print("Edit Student Name (" + oldName + ") : ");
+        System.out.print("Edit Lecturer Name (" + oldName + ") : ");
         String name = scanner.nextLine().trim();
         if (isCancel(name)) return;
         if (name.isEmpty()) name = oldName;
 
-        System.out.print("Edit Student Matric No (" + oldMatric + ") : ");
-        String matric = scanner.nextLine().trim();
-        if (isCancel(matric)) return;
-        if (matric.isEmpty()) matric = oldMatric;
+        System.out.print("Edit Lecturer Work ID (" + oldWorkId + ") : ");
+        String workId = scanner.nextLine().trim();
+        if (isCancel(workId)) return;
+        if (workId.isEmpty()) workId = oldWorkId;
 
         String username;
         while (true) {
-            System.out.print("Edit Student Username (" + oldUsername + ") : ");
+            System.out.print("Edit Lecturer Username (" + oldUsername + ") : ");
             username = scanner.nextLine().trim();
             if (isCancel(username)) return;
 
@@ -219,40 +219,40 @@ public class Admin_ManageStudents {
             break; // valid username
         }
 
-        System.out.print("Edit Student Password (" + oldPassword + ") : ");
+        System.out.print("Edit Lecturer Password (" + oldPassword + ") : ");
         String password = scanner.nextLine().trim();
         if (isCancel(password)) return;
         if (password.isEmpty()) password = oldPassword;
 
         // Update record
-        lines[index] = name + "," + matric + "," + username + "," + password;
+        lines[index] = name + "," + workId + "," + username + "," + password;
 
         // Rewrite file
-        try (PrintWriter pw = new PrintWriter(new FileWriter(STUDENT_FILE))) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(LECTURER_FILE))) {
             for (int i = 0; i < count; i++) {
                 pw.println(lines[i]);
             }
-            System.out.println("\nStudent record updated successfully!");
+            System.out.println("\nLecturer record updated successfully!");
         } catch (IOException e) {
-            System.out.println("Error saving Students.csv");
+            System.out.println("Error saving Lecturers.csv");
         }
 
         pause(scanner);
     }
 
-    // Delete Students
-    private static void deleteStudent(Scanner scanner) {
+    // Delete Lecturer
+    private static void deleteLecturer(Scanner scanner) {
         Main.clearScreen();
         System.out.println("=========================================================================================");
-        System.out.println("                                DELETE STUDENTS");
+        System.out.println("                              DELETE LECTURER");
         System.out.println("=========================================================================================\n");
-        System.out.println(">> Admin >> Manage Students >> Delete Students\n");
+        System.out.println(">> Admin >> Manage Lecturers >> Delete Lecturer\n");
 
         String[] lines = new String[1000];
         int count = 0;
 
-        // Read all students
-        try (BufferedReader br = new BufferedReader(new FileReader(STUDENT_FILE))) {
+        // Read all lecturers
+        try (BufferedReader br = new BufferedReader(new FileReader(LECTURER_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.replace("\uFEFF", "").trim();
@@ -261,13 +261,13 @@ public class Admin_ManageStudents {
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading Students.csv");
+            System.out.println("Error reading Lecturers.csv");
             pause(scanner);
             return;
         }
 
         if (count == 0) {
-            System.out.println("No student records found.");
+            System.out.println("No lecturer records found.");
             pause(scanner);
             return;
         }
@@ -275,7 +275,7 @@ public class Admin_ManageStudents {
         // Display table
         System.out.println("------------------------------------------------------------------------------------------");
         System.out.printf("%-5s %-25s %-15s %-20s %-15s%n",
-                "No.", "Name", "Matric No.", "Username", "Password");
+                "No.", "Name", "Work ID", "Username", "Password");
         System.out.println("------------------------------------------------------------------------------------------");
 
         for (int i = 0; i < count; i++) {
@@ -289,7 +289,7 @@ public class Admin_ManageStudents {
         }
 
         System.out.println("\n------------------------------------------------------------------------------------------");
-        System.out.print("Pick student to be deleted (1-" + count + ") or type 'Exit': ");
+        System.out.print("Pick lecturer to be deleted (1-" + count + ") or type 'Exit': ");
         String input = scanner.nextLine().trim();
 
         if (isCancel(input)) return;
@@ -304,21 +304,21 @@ public class Admin_ManageStudents {
         }
 
         if (choice < 1 || choice > count) {
-            System.out.println("Invalid student number.");
+            System.out.println("Invalid lecturer number.");
             pause(scanner);
             return;
         }
 
         int index = choice - 1;
-        String[] student = lines[index].split(",");
+        String[] lecturer = lines[index].split(",");
 
-        String name = student[0].trim();
-        String matric = student[1].trim();
-        String username = student[2].trim();
-        String password = student[3].trim();
+        String name = lecturer[0].trim();
+        String workId = lecturer[1].trim();
+        String username = lecturer[2].trim();
+        String password = lecturer[3].trim();
 
         // Confirmation
-        System.out.println("\nAre you sure you want to delete this student? (Y/N)");
+        System.out.println("\nAre you sure you want to delete this lecturer? (Y/N)");
         System.out.print(">> ");
         String confirm = scanner.nextLine().trim();
 
@@ -328,49 +328,48 @@ public class Admin_ManageStudents {
             return;
         }
 
-        // Rewrite CSV excluding deleted student
-        try (PrintWriter pw = new PrintWriter(new FileWriter(STUDENT_FILE))) {
+        // Rewrite CSV excluding deleted lecturer
+        try (PrintWriter pw = new PrintWriter(new FileWriter(LECTURER_FILE))) {
             for (int i = 0; i < count; i++) {
                 if (i != index) {
                     pw.println(lines[i]);
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error updating Students.csv");
+            System.out.println("Error updating Lecturers.csv");
             pause(scanner);
             return;
         }
 
         // Show deleted info
-        System.out.println("\nStudent Deleted Successfully!");
-        System.out.println("[INFORMATION OF DELETED STUDENT]");
+        System.out.println("\nLecturer Deleted Successfully!");
+        System.out.println("[INFORMATION OF DELETED LECTURER]");
         System.out.println("Name\t\t: " + name);
-        System.out.println("Matric No.\t: " + matric);
+        System.out.println("Work ID\t\t: " + workId);
         System.out.println("Username\t: " + username);
         System.out.println("Password\t: " + password);
 
         pause(scanner);
     }
 
-    // View All Students
-    private static void viewAllStudents(Scanner scanner) {
+    // View All Lecturers
+    private static void viewAllLecturers(Scanner scanner) {
         Main.clearScreen();
         System.out.println("=========================================================================================");
-        System.out.println("                              VIEW ALL STUDENTS");
+        System.out.println("                            VIEW ALL LECTURERS");
         System.out.println("=========================================================================================\n");
-        System.out.println(">> Admin >> Manage Students >> View All Students\n");
+        System.out.println(">> Admin >> Manage Lecturers >> View All Lecturers\n");
         System.out.println("------------------------------------------------------------------------------------------");
 
         System.out.printf("%-5s %-25s %-15s %-20s %-15s%n",
-                "No.", "Name", "Matric No.", "Username", "Password");
+                "No.", "Name", "Work ID", "Username", "Password");
         System.out.println("------------------------------------------------------------------------------------------");
 
         int count = 0;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(STUDENT_FILE))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(LECTURER_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
-
                 line = line.replace("\uFEFF", "").trim();
                 if (line.isEmpty()) continue;
 
@@ -380,19 +379,19 @@ public class Admin_ManageStudents {
                     System.out.printf("%-5d %-25s %-15s %-20s %-15s%n",
                             count,
                             data[0].trim(), // Name
-                            data[1].trim(), // Matric No
+                            data[1].trim(), // Work ID
                             data[2].trim(), // Username
                             data[3].trim()  // Password
                     );
                 }
             }
         } catch (IOException e) {
-            System.out.println("Error reading Students.csv");
+            System.out.println("Error reading Lecturers.csv");
             System.out.println("Message: " + e.getMessage());
         }
 
         if (count == 0) {
-            System.out.println("No student records found.");
+            System.out.println("No lecturer records found.");
         }
 
         System.out.println("\n------------------------------------------------------------------------------------------");
@@ -400,17 +399,16 @@ public class Admin_ManageStudents {
         scanner.nextLine();
     }
 
-
     private static void pause(Scanner scanner) {
         System.out.print("\nPress Enter to continue...");
         scanner.nextLine();
     }
 
-    // Username Check
+    // Username Check (same as student version - checks across all user files)
     private static boolean isUsernameExists(String username) {
         return checkFileForUsername("csv_database/Admin.csv", username) ||
-            checkFileForUsername("csv_database/Lecturers.csv", username) ||
-            checkFileForUsername("csv_database/Students.csv", username);
+               checkFileForUsername("csv_database/Lecturers.csv", username) ||
+               checkFileForUsername("csv_database/Students.csv", username);
     }
 
     private static boolean checkFileForUsername(String filename, String username) {
@@ -440,5 +438,4 @@ public class Admin_ManageStudents {
         }
         return false;
     }
-
 }

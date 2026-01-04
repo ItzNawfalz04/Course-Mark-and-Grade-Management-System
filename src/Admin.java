@@ -31,40 +31,21 @@ public class Admin {
             
             switch (choice) {
                 case "1":
-                    clearScreen();
+                    Main.clearScreen();
                     Admin_ManageStudents.showMenu(scanner);
                     break;
                 case "2":
-                    System.out.println("\n=== Manage Lecturers ===");
-                    System.out.println("Functionality coming soon!");
-                    System.out.println("Would allow admin to add, remove, or modify lecturer accounts.");
-                    scanner.nextLine();
-                    clearScreen();
+                    Main.clearScreen();
+                    Admin_ManageLecturers.showMenu(scanner);
                     break;
                 case "3":
-                    clearScreen();
+                    Main.clearScreen();
                     loggedIn = false;
                     break;
                 default:
                     System.out.println("\nInvalid choice! Please enter a number from 1 to 2.");
                     scanner.nextLine();
-                    clearScreen();
-            }
-        }
-    }
-    
-    private void clearScreen() {
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (Exception e) {
-            // If clearing fails, just print multiple newlines
-            for (int i = 0; i < 50; i++) {
-                System.out.println();
+                    Main.clearScreen();
             }
         }
     }

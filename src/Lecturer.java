@@ -18,7 +18,7 @@ public class Lecturer {
                                "===================================================");
             System.out.println("\n[LECTURER INFORMATION]\n");
             System.out.println("Lecturer Name\t: " + name);
-            System.out.println("Work ID\t: " + workId);
+            System.out.println("Work ID\t\t: " + workId);
             System.out.println("User Type\t: Lecturer");
             System.out.println("\n---------------------------------------------------");
             System.out.println("1. View Assigned Courses");
