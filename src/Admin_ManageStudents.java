@@ -17,7 +17,7 @@ public class Admin_ManageStudents {
             System.out.println("===================================================");
             System.out.println("                   MANAGE STUDENTS"); 
             System.out.println("===================================================\n");
-            System.out.println(">> Admin >> Manage Students\n");
+            System.out.println(">> Admin Menu >> Manage Students\n");
             System.out.println("---------------------------------------------------");
             System.out.println("[1] Add New Students");
             System.out.println("[2] Edit Students");
@@ -60,7 +60,7 @@ public class Admin_ManageStudents {
         System.out.println("===================================================");
         System.out.println("                    ADD NEW STUDENTS"); 
         System.out.println("===================================================\n");
-        System.out.println(">> Admin >> Manage Students >> Add New Students");
+        System.out.println(">> Admin Menu >> Manage Students >> Add New Students");
         System.out.println("\nType 'Exit' to cancel and return to previous menu.");
         System.out.println("\n---------------------------------------------------");
 
@@ -112,7 +112,7 @@ public class Admin_ManageStudents {
         System.out.println("=========================================================================================");
         System.out.println("                                  EDIT STUDENTS");
         System.out.println("=========================================================================================\n");
-        System.out.println(">> Admin >> Manage Students >> Edit Students\n");
+        System.out.println(">> Admin Menu >> Manage Students >> Edit Students\n");
 
         String[] lines = new String[1000]; // simple storage
         int count = 0;
@@ -246,7 +246,7 @@ public class Admin_ManageStudents {
         System.out.println("=========================================================================================");
         System.out.println("                                DELETE STUDENTS");
         System.out.println("=========================================================================================\n");
-        System.out.println(">> Admin >> Manage Students >> Delete Students\n");
+        System.out.println(">> Admin Menu >> Manage Students >> Delete Students\n");
 
         String[] lines = new String[1000];
         int count = 0;
@@ -358,7 +358,7 @@ public class Admin_ManageStudents {
         System.out.println("=========================================================================================");
         System.out.println("                              VIEW ALL STUDENTS");
         System.out.println("=========================================================================================\n");
-        System.out.println(">> Admin >> Manage Students >> View All Students\n");
+        System.out.println(">> Admin Menu >> Manage Students >> View All Students\n");
         System.out.println("------------------------------------------------------------------------------------------");
 
         System.out.printf("%-5s %-25s %-15s %-20s %-15s%n",

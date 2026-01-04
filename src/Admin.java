@@ -21,11 +21,12 @@ public class Admin {
             System.out.println("Admin ID\t: " + adminId);
             System.out.println("User Type\t: Administrator");
             System.out.println("\n---------------------------------------------------");
-            System.out.println("[1] Manage Students");
-            System.out.println("[2] Manage Lecturers");
-            System.out.println("[3] Logout");
+            System.out.println("[1] Manage Students"); // Manage Students
+            System.out.println("[2] Manage Lecturers"); // Manage Lecturer
+            System.out.println("[3] Manage Courses"); // Manage Course
+            System.out.println("[4] Logout");
             System.out.println("---------------------------------------------------");
-            System.out.print("Enter your choice (1-3): ");
+            System.out.print("Enter your choice (1-4): ");
             
             String choice = scanner.nextLine();
             
@@ -40,10 +41,14 @@ public class Admin {
                     break;
                 case "3":
                     Main.clearScreen();
+                    Admin_ManageCourses.showMenu(scanner);
+                    break;
+                case "4":
+                    Main.clearScreen();
                     loggedIn = false;
                     break;
                 default:
-                    System.out.println("\nInvalid choice! Please enter a number from 1 to 2.");
+                    System.out.println("\nInvalid choice! Please enter a number from 1 to 4.");
                     scanner.nextLine();
                     Main.clearScreen();
             }

@@ -4,7 +4,7 @@ public class Course {
     private String name;
     private String code;
     private int credits;
-    //private ArrayList<StudentReg> studRegList = new ArrayList<>(); . not created yet because class StudentReg has not been created yet
+    private ArrayList<StudentReg> studRegList = new ArrayList<>();
     private ArrayList<LecturerAssg> lectAssgList = new ArrayList<>();
     
     //Course Constructor
@@ -35,7 +35,16 @@ public class Course {
         lectAssgList.add(lectAssg);
     }
 
-    //public void registerStudent(StudentReg studReg){
-    //    studRegList.add(studReg);
-    //}
+    public void registerStudent(StudentReg studReg){
+        studRegList.add(studReg);
+    }
+
+    //For Lecturer to access Student in a course
+    public ArrayList<Student> getStudentArray(){
+        ArrayList<Student> stdList = new ArrayList<>();
+        for(StudentReg x : studRegList){
+            stdList.add(x.getStudent());
+        }
+        return stdList;
+    }
 }

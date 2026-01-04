@@ -8,6 +8,16 @@ public class Student {
         this.name = name;
         this.matricNo = matricNo;
     }
+
+    //Method for get Student Name
+    public String getName(){
+        return name;
+    }
+
+    //Method for get Student Matric No
+    public String getMatric(){
+        return matricNo;
+    }
     
     public void showMenu(Scanner scanner) {
         boolean loggedIn = true;
