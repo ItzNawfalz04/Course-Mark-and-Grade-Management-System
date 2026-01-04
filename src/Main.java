@@ -64,7 +64,7 @@ public class Main {
         String password = scanner.nextLine();
         
         // Student Authentication
-        boolean isStudent = authenticateUser("csv_database/Students.csv", username, password, "student");
+        boolean isStudent = authenticateUser("../csv_database/Students.csv", username, password, "student");
         
         if (isStudent) {
             System.out.println("\n----------------------------------------------------------------");
@@ -77,7 +77,7 @@ public class Main {
             student.showMenu(scanner);
         } else {
             // Lecturer Authentication
-            boolean isLecturer = authenticateUser("csv_database/Lecturers.csv", username, password, "lecturer");
+            boolean isLecturer = authenticateUser("../csv_database/Lecturers.csv", username, password, "lecturer");
             
             if (isLecturer) {
                 System.out.println("\n----------------------------------------------------------------");
@@ -90,7 +90,7 @@ public class Main {
                 lecturer.showMenu(scanner);
             } else {
                 // Admin Authentication
-                boolean isAdmin = authenticateUser("csv_database/Admin.csv", username, password, "admin");
+                boolean isAdmin = authenticateUser("../csv_database/Admin.csv", username, password, "admin");
                 
                 if (isAdmin) {
                     System.out.println("\n----------------------------------------------------------------");
