@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+
+public class Course {
+    private String name;
+    private String code;
+    private int credits;
+    //private ArrayList<StudentReg> studRegList = new ArrayList<>(); . not created yet because class StudentReg has not been created yet
+    private ArrayList<LecturerAssg> lectAssgList = new ArrayList<>();
+    
+    //Course Constructor
+    Course (String name, String code, int credits) {
+        this.name = name;
+        this.code = code;
+        this.credits = credits;
+    }
+
+    //Method for get course code and return it
+    public String getCode(){
+        return code;
+    }
+
+    //Method for get course credits and return it
+    public int getCredits(){
+        return credits;
+    }
+
+    //Tostring menthod
+    public String toString(){
+        //Example
+        //DISCRETE STRUCTURE - SECI1013 - 3 Credits
+        return name+" - "+code+" - "+credits+" Credits";
+    }
+
+    public void assignLecturer(LecturerAssg lectAssg){
+        lectAssgList.add(lectAssg);
+    }
+
+    //public void registerStudent(StudentReg studReg){
+    //    studRegList.add(studReg);
+    //}
+}
