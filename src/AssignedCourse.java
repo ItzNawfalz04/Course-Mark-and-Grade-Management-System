@@ -6,7 +6,6 @@ public class AssignedCourse {
     private static final String COURSES_FILE = "csv_database/Courses.csv";
     private static final String COURSE_ASSG_FILE = "csv_database/CourseAssg.csv";
 
-    // Change void to List<String> to return the found courses
     public static List<String> displayAndGetCourses(String lecturerWorkId) {
         
         List<String> foundCourses = new ArrayList<>(); // List to store course codes
