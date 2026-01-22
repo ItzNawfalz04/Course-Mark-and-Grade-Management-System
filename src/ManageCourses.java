@@ -26,7 +26,7 @@ public class ManageCourses {
             System.out.println(">> Admin Menu >> Manage Courses");
             System.out.println("-------------------------------------------------------\n");
             System.out.println("[1] View All Courses");
-            System.out.println("[2] View Lecturer for Assigned Course");
+            System.out.println("[2] View Lecturers for All Courses");
             System.out.println("[3] Assign Lecturer to Course");
             System.out.println("[4] Unassign Lecturer from Course");
             System.out.println("[5] Back to Admin Menu");
@@ -54,7 +54,7 @@ public class ManageCourses {
                     break;
                 default:
                     System.out.println("\nInvalid choice! Please enter 1-5.");
-                    pause(scanner);
+                    ManageStudents.pause(scanner);
             }
         }
     }
@@ -116,7 +116,7 @@ public class ManageCourses {
         System.out.println("===================================================================================\n");
         System.out.println("                       COURSE MARK & GRADE MANAGEMENT SYSTEM");
         System.out.println("\n===================================================================================");
-        System.out.println(">> Admin Menu >> Manage Courses >> View Lecturer for Assigned Courses");
+        System.out.println(">> Admin Menu >> Manage Courses >> View Lecturers for All Courses");
         System.out.println("-----------------------------------------------------------------------------------\n");
         
         // Load lecturer data
@@ -216,12 +216,12 @@ public class ManageCourses {
         System.out.println("                       COURSE MARK & GRADE MANAGEMENT SYSTEM");
         System.out.println("\n===================================================================================");
         System.out.println(">> Admin Menu >> Manage Courses >> View All Courses");
-        System.out.println("-------------------------------------------------------------------------------\n");
+        System.out.println("-----------------------------------------------------------------------------------\n");
         System.out.println("All available courses:");
-        System.out.println("-------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------");
         System.out.printf("%-5s %-40s %-15s %-15s%n",
                 "No.", "Course Name", "Course Code", "Credit Hour");
-        System.out.println("-------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------");
 
         List<String[]> coursesList = new ArrayList<>();
         int courseCount = 0;
@@ -246,13 +246,13 @@ public class ManageCourses {
             }
         } catch (IOException e) {
             System.out.println("Error reading Courses.csv");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (courseCount == 0) {
             System.out.println("No course records found.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -260,20 +260,20 @@ public class ManageCourses {
         System.out.print("Pick course to assign lecturer (1-" + courseCount + ") or type 'Exit': ");
         String courseInput = scanner.nextLine().trim();
 
-        if (isCancel(courseInput)) return;
+        if (ManageStudents.isCancel(courseInput)) return;
 
         int courseChoice;
         try {
             courseChoice = Integer.parseInt(courseInput);
         } catch (NumberFormatException e) {
             System.out.println("Invalid input.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (courseChoice < 1 || courseChoice > courseCount) {
             System.out.println("Invalid course number.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -348,14 +348,14 @@ public class ManageCourses {
             }
         } catch (IOException e) {
             System.out.println("Error reading Lecturers.csv");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (availableLecturerCount == 0) {
             System.out.println("\nNo available lecturers to assign.");
             System.out.println("All lecturers are already assigned to this course.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -363,20 +363,20 @@ public class ManageCourses {
         System.out.print("Pick lecturer to be assigned (1-" + availableLecturerCount + ") or type 'Exit': ");
         String lecturerInput = scanner.nextLine().trim();
 
-        if (isCancel(lecturerInput)) return;
+        if (ManageStudents.isCancel(lecturerInput)) return;
 
         int lecturerChoice;
         try {
             lecturerChoice = Integer.parseInt(lecturerInput);
         } catch (NumberFormatException e) {
             System.out.println("Invalid input.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (lecturerChoice < 1 || lecturerChoice > availableLecturerCount) {
             System.out.println("Invalid lecturer number.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -398,7 +398,7 @@ public class ManageCourses {
             System.out.println("\nError adding course assignment.");
         }
 
-        pause(scanner);
+        ManageStudents.pause(scanner);
     }
 
     // Unassign Lecturer from Course
@@ -464,7 +464,7 @@ public class ManageCourses {
 
         if (assignmentCount == 0) {
             System.out.println("No course assignments found.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -472,20 +472,20 @@ public class ManageCourses {
         System.out.print("Pick assignment to unassign (1-" + assignmentCount + ") or type 'Exit': ");
         String input = scanner.nextLine().trim();
 
-        if (isCancel(input)) return;
+        if (ManageStudents.isCancel(input)) return;
 
         int choice;
         try {
             choice = Integer.parseInt(input);
         } catch (NumberFormatException e) {
             System.out.println("Invalid input.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (choice < 1 || choice > assignmentCount) {
             System.out.println("Invalid assignment number.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -509,14 +509,14 @@ public class ManageCourses {
         System.out.println("Are you sure you want to unassign this lecturer from the course?");
         System.out.println("Course Name\t: " + courseName);
         System.out.println("Course Code\t: " + courseCode);
-        System.out.println("Lecturer\t\t: " + lecturerName + " (WorkID: " + workID + ")");
+        System.out.println("Lecturer\t: " + lecturerName + " (WorkID: " + workID + ")");
         System.out.print("\nConfirm unassignment? (Y/N): ");
         
         String confirm = scanner.nextLine().trim();
         
         if (!confirm.equalsIgnoreCase("Y")) {
             System.out.println("\nUnassignment cancelled.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -531,7 +531,7 @@ public class ManageCourses {
             System.out.println("\nError removing course assignment.");
         }
 
-        pause(scanner);
+        ManageStudents.pause(scanner);
     }
 
     // ============================================================
@@ -689,18 +689,5 @@ public class ManageCourses {
         }
         
         return lecturerMap;
-    }
-
-    private static void pause(Scanner scanner) {
-        System.out.print("Press Enter to continue...");
-        scanner.nextLine();
-    }
-
-    private static boolean isCancel(String input) {
-        if (input.equalsIgnoreCase("Exit")) {
-            System.out.println("\nOperation cancelled. Returning to previous menu...");
-            return true;
-        }
-        return false;
     }
 }

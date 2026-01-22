@@ -64,25 +64,25 @@ public class ManageStudents {
         System.out.println(">> Admin Menu >> Manage Students >> Add New Student");
         System.out.println("-------------------------------------------------------\n");
         System.out.println("Type 'Exit' to cancel and return to previous menu.");
-        System.out.println("\n---------------------------------------------------\n");
+        System.out.println("\n-------------------------------------------------------\n");
 
-        System.out.print("Student Name\t\t: ");
+        System.out.print("New Student Name\t: ");
         String name = scanner.nextLine().trim();
         if (isCancel(name)) return;
 
-        System.out.print("Student ID\t\t: ");
+        System.out.print("New Student ID\t\t: ");
         String studentId = scanner.nextLine().trim();
         if (isCancel(studentId)) return;
 
-        System.out.print("Student Username\t: ");
+        System.out.print("New Student Username\t: ");
         String username = scanner.nextLine().trim();
         if (isCancel(username)) return;
 
-        System.out.print("Student Password\t: ");
+        System.out.print("New Student Password\t: ");
         String password = scanner.nextLine().trim();
         if (isCancel(password)) return;
 
-        System.out.println("\n---------------------------------------------------");
+        System.out.println("\n-------------------------------------------------------");
 
         // Validation
         if (name.isEmpty() || studentId.isEmpty() || username.isEmpty() || password.isEmpty()) {
@@ -422,13 +422,8 @@ public class ManageStudents {
             System.out.println("No student records found.");
         }
 
-        System.out.println("------------------------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------");
         System.out.println("Press Enter to go back...");
-        scanner.nextLine();
-    }
-
-    private static void pause(Scanner scanner) {
-        System.out.print("Press Enter to continue...");
         scanner.nextLine();
     }
 
@@ -484,7 +479,12 @@ public class ManageStudents {
         return false;
     }
 
-    private static boolean isCancel(String input) {
+    public static void pause(Scanner scanner) {
+        System.out.print("Press Enter to continue...");
+        scanner.nextLine();
+    }
+    
+    public static boolean isCancel(String input) {
         if (input.equalsIgnoreCase("Exit")) {
             System.out.println("\nOperation cancelled. Returning to previous menu...");
             return true;

@@ -60,7 +60,7 @@ public class ManageLecturers {
 
                 default:
                     System.out.println("\nInvalid choice! Please enter 1–6.");
-                    pause(scanner);
+                    ManageStudents.pause(scanner);
             }
         }
     }
@@ -78,32 +78,32 @@ public class ManageLecturers {
 
         System.out.print("Lecturer Name\t\t: ");
         String name = scanner.nextLine().trim();
-        if (isCancel(name)) return;
+        if (ManageStudents.isCancel(name)) return;
 
         System.out.print("Lecturer WorkID\t\t: ");
         String workId = scanner.nextLine().trim();
-        if (isCancel(workId)) return;
+        if (ManageStudents.isCancel(workId)) return;
 
         System.out.print("Lecturer Username\t: ");
         String username = scanner.nextLine().trim();
-        if (isCancel(username)) return;
+        if (ManageStudents.isCancel(username)) return;
 
         System.out.print("Lecturer Password\t: ");
         String password = scanner.nextLine().trim();
-        if (isCancel(password)) return;
+        if (ManageStudents.isCancel(password)) return;
 
         System.out.println("\n---------------------------------------------------");
 
         // Validation
         if (name.isEmpty() || workId.isEmpty() || username.isEmpty() || password.isEmpty()) {
             System.out.println("\nError: All fields are required!");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (isUsernameExists(username)) {
             System.out.println("\nError: Username already exists!");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -115,7 +115,7 @@ public class ManageLecturers {
             System.out.println("Message: " + e.getMessage());
         }
 
-        pause(scanner);
+        ManageStudents.pause(scanner);
     }
 
     // Edit Lecturer
@@ -141,13 +141,13 @@ public class ManageLecturers {
             }
         } catch (IOException e) {
             System.out.println("Error reading Lecturers.csv");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (count == 0) {
             System.out.println("No lecturer records found.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -172,20 +172,20 @@ public class ManageLecturers {
         System.out.print("Pick lecturer to edit (1-" + count + ") or type 'Exit': ");
         String input = scanner.nextLine().trim();
 
-        if (isCancel(input)) return;
+        if (ManageStudents.isCancel(input)) return;
 
         int choice;
         try {
             choice = Integer.parseInt(input);
         } catch (NumberFormatException e) {
             System.out.println("Invalid input.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (choice < 1 || choice > count) {
             System.out.println("Invalid lecturer number.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -202,19 +202,19 @@ public class ManageLecturers {
         System.out.println("------------------------------------------------------------------------------------\n");
         System.out.print("Edit Lecturer Name (" + oldName + ") : ");
         String name = scanner.nextLine().trim();
-        if (isCancel(name)) return;
+        if (ManageStudents.isCancel(name)) return;
         if (name.isEmpty()) name = oldName;
 
         System.out.print("Edit Lecturer Work ID (" + oldWorkId + ") : ");
         String workId = scanner.nextLine().trim();
-        if (isCancel(workId)) return;
+        if (ManageStudents.isCancel(workId)) return;
         if (workId.isEmpty()) workId = oldWorkId;
 
         String username;
         while (true) {
             System.out.print("Edit Lecturer Username (" + oldUsername + ") : ");
             username = scanner.nextLine().trim();
-            if (isCancel(username)) return;
+            if (ManageStudents.isCancel(username)) return;
 
             // Keep old username
             if (username.isEmpty()) {
@@ -233,7 +233,7 @@ public class ManageLecturers {
 
         System.out.print("Edit Lecturer Password (" + oldPassword + ") : ");
         String password = scanner.nextLine().trim();
-        if (isCancel(password)) return;
+        if (ManageStudents.isCancel(password)) return;
         if (password.isEmpty()) password = oldPassword;
 
         // Update record
@@ -251,7 +251,7 @@ public class ManageLecturers {
             System.out.println("Error saving Lecturers.csv");
         }
 
-        pause(scanner);
+        ManageStudents.pause(scanner);
     }
 
     // Delete Lecturer
@@ -278,13 +278,13 @@ public class ManageLecturers {
             }
         } catch (IOException e) {
             System.out.println("Error reading Lecturers.csv");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (count == 0) {
             System.out.println("No lecturer records found.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -308,20 +308,20 @@ public class ManageLecturers {
         System.out.print("Pick lecturer to be deleted (1-" + count + ") or type 'Exit': ");
         String input = scanner.nextLine().trim();
 
-        if (isCancel(input)) return;
+        if (ManageStudents.isCancel(input)) return;
 
         int choice;
         try {
             choice = Integer.parseInt(input);
         } catch (NumberFormatException e) {
             System.out.println("Invalid input.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (choice < 1 || choice > count) {
             System.out.println("Invalid lecturer number.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -339,7 +339,7 @@ public class ManageLecturers {
 
         if (!confirm.equalsIgnoreCase("Y")) {
             System.out.println("\nDelete operation cancelled.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -352,7 +352,7 @@ public class ManageLecturers {
             }
         } catch (IOException e) {
             System.out.println("Error updating Lecturers.csv");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -364,7 +364,7 @@ public class ManageLecturers {
         System.out.println("Username\t: " + username);
         System.out.println("Password\t: " + password);
         System.out.println("------------------------------------------------------------------------------------");
-        pause(scanner);
+        ManageStudents.pause(scanner);
     }
 
     // View All Lecturers
@@ -411,7 +411,7 @@ public class ManageLecturers {
             System.out.println("No lecturer records found.");
         }
 
-        System.out.println("------------------------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------");
         System.out.println("Press Enter to go back...");
         scanner.nextLine();
     }
@@ -443,13 +443,13 @@ public class ManageLecturers {
             }
         } catch (IOException e) {
             System.out.println("Error reading Lecturers.csv");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
         if (lecturerMap.isEmpty()) {
             System.out.println("No lecturer records found.");
-            pause(scanner);
+            ManageStudents.pause(scanner);
             return;
         }
 
@@ -564,11 +564,6 @@ public class ManageLecturers {
         return coursesMap;
     }
 
-    private static void pause(Scanner scanner) {
-        System.out.print("Press Enter to continue...");
-        scanner.nextLine();
-    }
-
     // Username Check (same as student version - checks across all user files)
     private static boolean isUsernameExists(String username) {
         return checkFileForUsername("csv_database/Admin.csv", username) ||
@@ -592,14 +587,6 @@ public class ManageLecturers {
             }
         } catch (IOException e) {
             System.out.println("Error reading file: " + filename);
-        }
-        return false;
-    }
-
-    private static boolean isCancel(String input) {
-        if (input.equalsIgnoreCase("Exit")) {
-            System.out.println("\nOperation cancelled. Returning to previous menu...");
-            return true;
         }
         return false;
     }
