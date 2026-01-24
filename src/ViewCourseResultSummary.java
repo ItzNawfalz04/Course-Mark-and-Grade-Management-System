@@ -7,12 +7,9 @@ public class ViewCourseResultSummary {
 
     public static void viewSummary(String lecturerWorkId, Scanner scanner) {
 
-        System.out.println("--------------------------------------------------------------------------");
-        System.out.println("                       COURSE RESULTS SUMMARY                             ");
-        System.out.println("--------------------------------------------------------------------------");
         
         //Use class AssignedCourse to get List of the courses
-        List<String> myCourses = AssignedCourse.displayAndGetCourses(lecturerWorkId);
+        List<String> myCourses = ViewAssignedCourse.displayAndGetCourses(lecturerWorkId);
 
         if (myCourses.isEmpty()) return;
 
@@ -35,6 +32,7 @@ public class ViewCourseResultSummary {
         
         // Processing the mark
         File courseFile = new File(COURSE_MARKS_PATH + selectedCourseCode + ".csv");
+        Main.clearScreen();
         if (!courseFile.exists()) {
             System.out.println("No data found for " + selectedCourseCode);
             return;
@@ -50,6 +48,11 @@ public class ViewCourseResultSummary {
         List<String> topScorers = new ArrayList<>(); 
 
         try (BufferedReader br = new BufferedReader(new FileReader(courseFile))) {
+            System.out.println("==========================================================================\n");
+            System.out.println("                  COURSE MARK & GRADE MANAGEMENT SYSTEM");
+            System.out.println("\n==========================================================================");
+            System.out.println(">> Lecturer Menu >> View Course Result Summary");
+            System.out.println("--------------------------------------------------------------------------\n");
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.startsWith("\uFEFF")) line = line.substring(1);
@@ -97,7 +100,6 @@ public class ViewCourseResultSummary {
 
         double average = grandTotal / studentCount;
 
-        System.out.println("\n--------------------------------------------------------------------------");
         System.out.println(" STATISTICS FOR " + selectedCourseCode);
         System.out.println("--------------------------------------------------------------------------");
         System.out.printf("%-25s : %d%n", "Total Students Graded", studentCount);

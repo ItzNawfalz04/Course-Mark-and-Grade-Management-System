@@ -8,9 +8,6 @@ public class ViewStudentInCourse {
 
     public static void view(String lecturerWorkId, Scanner scanner) {
         
-        System.out.println("--------------------------------------------------------------------------");
-        System.out.println("                          VIEW STUDENTS IN COURSE                         ");
-        System.out.println("--------------------------------------------------------------------------"); 
 
         // 1. Get Assigned Course Code
         List<String> myCourses = ViewAssignedCourse.displayAndGetCourses(lecturerWorkId);
@@ -38,6 +35,12 @@ public class ViewStudentInCourse {
         // 2. Read course file to get Marks
         File courseFile = new File(COURSE_MARKS_PATH + selectedCourseCode + ".csv");
         Main.clearScreen();
+
+        System.out.println("=================================================================================================\n");
+        System.out.println("                              COURSE MARK & GRADE MANAGEMENT SYSTEM");
+        System.out.println("\n=================================================================================================");
+        System.out.println(">> Lecturer Menu >> View Student in a Course");
+        System.out.println("-------------------------------------------------------------------------------------------------\n");
         
         if (!courseFile.exists()) {
             System.out.println("No students registered for this course yet (File not found).");
@@ -84,7 +87,7 @@ public class ViewStudentInCourse {
         }
         
         // 3. Read Students.csv to match names and print Table
-        System.out.println("\nList of Students in " + selectedCourseCode + ":");
+        System.out.println("List of Students in " + selectedCourseCode + ":");
         System.out.println("-------------------------------------------------------------------------------------------------");
         // Header Table
         System.out.printf("%-5s %-15s %-30s %-10s %-10s %-10s %-5s%n", 

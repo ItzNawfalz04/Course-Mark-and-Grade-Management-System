@@ -8,11 +8,7 @@ public class UpdateMarks {
 
     public static void updateStudentMark(String lecturerWorkId, Scanner scanner) {
         
-        // 1. Retrieve list of courses assigned to the lecturer
-        System.out.println("--------------------------------------------------------------------------");
-        System.out.println("                          UPDATE STUDENT MARKS                            ");
-        System.out.println("--------------------------------------------------------------------------");
-        
+        // 1. Retrieve list of courses assigned to the lecturer        
         List<String> myCourses = ViewAssignedCourse.displayAndGetCourses(lecturerWorkId);
 
         if (myCourses.isEmpty()) return;
@@ -43,15 +39,19 @@ public class UpdateMarks {
             System.out.println("No students registered specifically for this course yet.");
             return;
         }
-
+        
         // 4. Begin loop for updating marks
-        // The loop ensures the UI refreshes (clears screen & reprints table) if an error occurs.
         while (true) {
             Main.clearScreen(); 
+            System.out.println("=========================================================================================\n");
+            System.out.println("                          COURSE MARK & GRADE MANAGEMENT SYSTEM");
+            System.out.println("\n=========================================================================================");
+            System.out.println(">> Lecturer Menu >> Update Student Marks");
+            System.out.println("-----------------------------------------------------------------------------------------\n");
 
-            System.out.println("\nSelected Course: " + selectedCourseCode);
+            System.out.println("Selected Course: " + selectedCourseCode);
             
-            // Display the table afresh in every iteration
+            // Display the table in every iteration
             displayCurrentMarksTable(courseFile); 
 
             System.out.println("\n(Refer to the table above)");
@@ -88,10 +88,10 @@ public class UpdateMarks {
                         System.out.println("Current Marks -> CW: " + currentCW + " | Final: " + currentFinal);
                         
                         // Request new marks input
-                        System.out.print("Enter New Course Work Mark (0-60): ");
+                        System.out.print("Enter New Course Work Mark (0-70): ");
                         String newCW = scanner.nextLine().trim();
                         
-                        System.out.print("Enter New Final Exam Mark (0-40): ");
+                        System.out.print("Enter New Final Exam Mark (0-30): ");
                         String newFinal = scanner.nextLine().trim();
 
                         // Validate numerical input to prevent data corruption
@@ -147,9 +147,6 @@ public class UpdateMarks {
                 for (String l : Newlines) pw.println(l);
                 
                 System.out.println("\nSUCCESS! Marks updated for " + matricNo);
-                
-                System.out.print("Press Enter to return to menu...");
-                scanner.nextLine();
                 break; // Exit loop and return to Lecturer Menu
                 
             } catch (IOException e) {
@@ -180,9 +177,9 @@ public class UpdateMarks {
         } catch (IOException e) { return; }
 
         // Display Table Header
-        System.out.println("\nCurrent Class List:");
+        System.out.println("Current Class List:");
         System.out.println("-----------------------------------------------------------------------------------------");
-        System.out.printf("%-15s %-30s %-8s %-8s %-8s %-5s%n", "Matric No", "Name", "CW", "Final", "Total", "Grd");
+        System.out.printf("%-15s %-30s %-8s %-8s %-8s %-5s%n", "Matric No", "Name", "CW", "Final", "Total", "Grade");
         System.out.println("-----------------------------------------------------------------------------------------");
 
         // Read Student Names and Display Combined Data
