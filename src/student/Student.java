@@ -1,4 +1,7 @@
+package student;
 import java.util.Scanner;
+import main.Main;
+
 
 public class Student {
     private String name;

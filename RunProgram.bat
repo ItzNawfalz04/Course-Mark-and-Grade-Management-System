@@ -1,20 +1,20 @@
 @echo off
 cls
 
-REM Go to the folder where this .bat file is located (root folder)
+REM 
 cd /d "%~dp0"
 
-REM Create bin folder if it doesn't exist
+REM 
 if not exist "bin" mkdir "bin"
 
-REM Compile all Java files from src into bin
-javac -d "bin" src\*.java
+REM 
+javac -d "bin" src\main\*.java src\student\*.java src\lecturer\*.java src\admin\*.java
 if errorlevel 1 (
     echo Compilation failed.
     pause
     exit /b
 )
 
-REM Run Main class from bin
-java -cp "bin" Main
+REM 
+java -cp "bin" main.Main
 pause

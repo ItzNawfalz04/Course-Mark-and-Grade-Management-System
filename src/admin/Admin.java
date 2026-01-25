@@ -1,4 +1,6 @@
+package admin;
 import java.util.Scanner;
+import main.Main;
 
 public class Admin {
     private String name;

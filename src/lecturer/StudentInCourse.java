@@ -1,5 +1,7 @@
+package lecturer;
 import java.io.*;
 import java.util.*;
+import main.Main;
 
 public class StudentInCourse {
 

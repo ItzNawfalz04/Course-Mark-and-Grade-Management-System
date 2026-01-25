@@ -1,3 +1,5 @@
+package admin;
+
 public class Mark {
     private int courseWork;
     private int finalExam;

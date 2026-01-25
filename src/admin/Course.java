@@ -1,4 +1,6 @@
+package admin;
 import java.util.ArrayList;
+import student.Student;
 
 public class Course {
     private String name;

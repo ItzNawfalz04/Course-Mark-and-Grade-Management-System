@@ -1,3 +1,6 @@
+package admin;
+import student.Student;
+
 public class StudentReg {
     private Student student;
     private String session;

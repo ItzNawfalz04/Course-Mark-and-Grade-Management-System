@@ -1,4 +1,6 @@
+package student;
 import java.io.*;
+import main.Main;
 
 public class ViewRegisteredCourse {
 

@@ -1,3 +1,6 @@
+package admin;
+import lecturer.Lecturer;
+
 public class LecturerAssg {
     Lecturer lecturer;
     String session;

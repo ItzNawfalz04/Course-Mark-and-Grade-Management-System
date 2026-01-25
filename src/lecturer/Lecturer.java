@@ -1,4 +1,6 @@
+package lecturer;
 import java.util.Scanner;
+import main.Main;
 
 public class Lecturer {
     private String name;

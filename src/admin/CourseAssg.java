@@ -1,3 +1,5 @@
+package admin;
+
 public class CourseAssg {
     private Course course;
     private String session;
