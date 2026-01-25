@@ -10,6 +10,6 @@ public class LecturerAssg {
     }
 
     public String toString(){
-        return lecturer.toString(); //Not fully completed cause its not in my job
+        return lecturer.toString();
     }
 }

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
-    // User data storage
+
     static String currentUserName = "";
     static String currentUserFullName = "";
     static String currentUserId = "";

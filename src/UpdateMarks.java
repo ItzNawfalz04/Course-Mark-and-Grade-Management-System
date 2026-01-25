@@ -9,7 +9,7 @@ public class UpdateMarks {
     public static void updateStudentMark(String lecturerWorkId, Scanner scanner) {
         
         // 1. Retrieve list of courses assigned to the lecturer        
-        List<String> myCourses = ViewAssignedCourse.displayAndGetCourses(lecturerWorkId);
+        List<String> myCourses = AssignedCourse.displayAndGetCourses(lecturerWorkId);
 
         if (myCourses.isEmpty()) return;
 
