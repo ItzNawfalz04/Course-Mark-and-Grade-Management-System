@@ -1,7 +1,7 @@
-import java.util.Scanner;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class Main {
     // User data storage
@@ -112,7 +112,6 @@ public class Main {
                 // Handle UTF-8 BOM (Byte Order Mark) if present
                 line = line.replace("\uFEFF", "").trim();
                 
-                // Check if line is not empty
                 if (line.isEmpty()) continue;
                 
                 String[] values = line.split(",");
@@ -147,7 +146,6 @@ public class Main {
                 System.out.flush();
             }
         } catch (Exception e) {
-            // If clearing fails, just print multiple newlines
             for (int i = 0; i < 50; i++) {
                 System.out.println();
             }

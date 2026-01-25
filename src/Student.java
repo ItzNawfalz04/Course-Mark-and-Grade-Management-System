@@ -9,12 +9,10 @@ public class Student {
         this.matricNo = matricNo;
     }
 
-    //Method for get Student Name
     public String getName(){
         return name;
     }
 
-    //Method for get Student Matric No
     public String getMatric(){
         return matricNo;
     }
@@ -24,8 +22,8 @@ public class Student {
         
         while (loggedIn) {
             System.out.println("===================================================");
-            System.out.println("                  STUDENTS MENU"); 
-            System.out.println("===================================================\n");
+            System.out.println("\n                  STUDENT MENU"); 
+            System.out.println("\n===================================================\n");
             System.out.println("[STUDENT INFORMATION]\n");
             System.out.println("Student Name\t: " + name);
             System.out.println("Matric No.\t: " + matricNo);
@@ -52,9 +50,7 @@ public class Student {
                     ViewRegisteredCourse.view(matricNo);
                     break;
                 case "4":
-                    System.out.println("\n=== View Grades & CGPA ===");
-                    System.out.println("Functionality coming soon!");
-                    System.out.println("Would display grades for all courses and calculate CGPA.");
+                    ViewGradesCGPA.viewGradesAndCGPA(matricNo, scanner);
                     break;
                 case "5":
                     Main.clearScreen();

@@ -6,6 +6,7 @@ public class ViewRegisteredCourse {
 
     public static void view(String matricNo) {
 
+        matricNo = matricNo.trim().toUpperCase();
         boolean studentFound = false;
 
         try (BufferedReader br = new BufferedReader(new FileReader(STUDENT_FILE))) {
@@ -13,42 +14,71 @@ public class ViewRegisteredCourse {
 
             while ((line = br.readLine()) != null) {
 
-                if (line.startsWith("\uFEFF")) {
-                    line = line.substring(1);
+                // Remove BOM if any
+                if (line.startsWith("\uFEFF")) line = line.substring(1);
+
+                String[] data = line.split(",", -1);
+
+                if (data.length > 0 && data[0].trim().equalsIgnoreCase("Name")) {
+                    continue;
                 }
 
-                String[] data = line.split(",");
+                if (data.length < 2) continue;
 
-                if (data.length < 5) continue;
+                String csvMatric = data[1].trim().toUpperCase();
 
-                if (data[1].equals(matricNo)) {
+                if (csvMatric.equals(matricNo)) {
                     studentFound = true;
 
-                    String courseData = data[4]; 
+                    String courseData = (data.length >= 5) ? data[4].trim() : "";
 
-                System.out.println("\n\n--------------------------------------------------------------------------");
-                System.out.println("\n                           REGISTERED COURSE                                  ");
-                System.out.println("\n--------------------------------------------------------------------------");
-                
+                    Main.clearScreen();
+                    System.out.println("\n\n==========================================================================");
+                    System.out.println("\n                           REGISTERED COURSE                                  ");
+                    System.out.println("\n==========================================================================");
+                    System.out.println(">> Student Menu >> View Registered Courses");
+                    System.out.println("---------------------------------------------------------------------------\n");
 
-                    if (courseData.equals("()") || courseData.trim().isEmpty()) {
+                    // If empty or () means no course
+                    if (courseData.isEmpty() || courseData.equals("()")) {
                         System.out.println("You have not registered any courses yet.");
+                        System.out.println("---------------------------------------------------------------------------");
                         return;
                     }
 
-                    courseData = courseData.substring(1, courseData.length() - 1);
-                    String[] courses = courseData.split("\\|");
-
-                    for (int i = 0; i < courses.length; i++) {
-                        System.out.println((i + 1) + ". " + courses[i]);
+                    if (courseData.startsWith("(") && courseData.endsWith(")") && courseData.length() >= 2) {
+                        courseData = courseData.substring(1, courseData.length() - 1).trim();
                     }
 
+                    if (courseData.isEmpty()) {
+                        System.out.println("You have not registered any courses yet.");
+                        System.out.println("---------------------------------------------------------------------------");
+                        return;
+                    }
+
+                    String[] courses = courseData.split("\\|");
+
+                    int count = 0;
+                    for (int i = 0; i < courses.length; i++) {
+                        String c = courses[i].trim();
+                        if (!c.isEmpty()) {
+                            count++;
+                            System.out.println(count + ". " + c);
+                        }
+                    }
+
+                    if (count == 0) {
+                        System.out.println("You have not registered any courses yet.");
+                    }
+
+                    System.out.println("---------------------------------------------------------------------------");
                     return;
                 }
             }
 
         } catch (IOException e) {
             System.out.println("Error reading Students.csv");
+            return;
         }
 
         if (!studentFound) {
