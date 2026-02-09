@@ -1,5 +1,8 @@
 # 🎓 Course Mark & Grade Management System
 
+<img width="1482" height="762" alt="image" src="https://github.com/user-attachments/assets/c0705101-1676-4caf-8621-bf548be258db" />   
+
+
 The **Course Mark & Grade Management System** is a Java-based group project developed for **SCSE1224: Advanced Programming** at **Universiti Teknologi Malaysia (UTM)**.
 
 This project focuses on designing and implementing a realistic academic management system while applying core **Object-Oriented Design (OOD)** principles such as **inheritance, aggregation, and composition**.
