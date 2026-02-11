@@ -1,3 +1,5 @@
+> **Note:** This branch `main` is the coding that were submitted for this course. The other branch `improvement` is coding improvement made by [ItzNawfalz04](https://github.com/ItzNawfalz04).
+
 # 🎓 Course Mark & Grade Management System
 
 <img width="1482" height="762" alt="image" src="https://github.com/user-attachments/assets/c0705101-1676-4caf-8621-bf548be258db" />   
